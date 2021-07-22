@@ -4,23 +4,36 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movies</title>
+  <title>invoices</title>
   <link rel="stylesheet" href="style.css">
   <script src='https://unpkg.com/vue@next'></script>
 </head>
 <body>
   <div id="app" class="container">
-    <h1>Movies</h1>
-    <form>
-       <input type="text">
-       <select>
-         <option value="index">index</option>
-         <option value="title">title</option>
-         <option value="year">year</option>
-      </select>
+    <h1>Invoices</h1>
+    <p>There are {{ remaining }} total invoices</p>
+    <form @submit.prevent="addItem">
+      <input type="text" class="form-control py-3" placeholder="Create a new invoice"
+      v-model="invoice">
     </form>
-    <div class="movies">
-      <div class="movie">Title (year)</div>
+    <div>
+       <select v-model="sort">
+         <option value="filter">Filter by status</option>
+         <option value="status">Paid</option>
+         <option value="status">Draft</option>
+         <option value="status">Pending</option>
+      </select>
+    </div>
+    <div class="invoices">
+      <div class="invoice"
+        v-for="invoice in sortinvoices()">
+        #{{invoice.number}} {{ invoice.client }} ${{ invoice.amount}}
+        <span class="status">{{invoice.status}}</span>
+        <button class="btn"
+            @click="removeItem(index)">Delete
+        </button>
+      </div>
+      
     </div>
   </div>
   <script src="script.js"></script>

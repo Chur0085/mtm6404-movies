@@ -1,137 +1,202 @@
-const movies = [
+const invoices = [
   {
-    index: 1,
-    title: 'Dredd',
-    year: 2013
+    number: 'BBRFL',
+    client: 'Ellison Daugherty',
+    amount: 8800,
+    status: 'Paid'
   },
   {
-    index: 2,
-    title: 'Dark City',
-    year: 1998
+    number: 'TYUBK',
+    client: 'Myrna Vinson',
+    amount: 4097,
+    status: 'Paid'
   },
   {
-    index: 3,
-    title: 'Elysium',
-    year: 2013
+    number: 'IRUBR',
+    client: 'Mcmillan Warner',
+    amount: 6466,
+    status: 'Draft'
   },
   {
-    index: 4,
-    title: 'Fifth Element',
-    year: 2007
+    number: 'WOAWJ',
+    client: 'Salas Strickland',
+    amount: 2762,
+    status: 'Draft'
   },
   {
-    index: 5,
-    title: 'Aliens',
-    year: 1986
+    number: 'NNJWP',
+    client: 'House Chandler',
+    amount: 8050,
+    status: 'Paid'
   },
   {
-    index: 6,
-    title: 'Terminator 2: Judgment Day',
-    year: 1991
+    number: 'TAADE',
+    client: 'Fry Kinney',
+    amount: 2666,
+    status: 'Draft'
   },
   {
-    index: 7,
-    title: 'Terminator, The',
-    year: 1984
+    number: 'AVYCD',
+    client: 'Tammy Roberson',
+    amount: 2245,
+    status: 'Paid'
   },
   {
-    index: 8,
-    title: 'Dawn of the Planet of the Apes',
-    year: 2014
+    number: 'XZIFA',
+    client: 'Hoffman Aguirre',
+    amount: 1340,
+    status: 'Paid'
   },
   {
-    index: 9,
-    title: 'Chappie',
-    year: 2015
+    number: 'BQHDI',
+    client: 'Hardin Massey',
+    amount: 4295,
+    status: 'Pending'
   },
   {
-    index: 10,
-    title: 'Matrix',
-    year: 1999
+    number: 'RRBAF',
+    client: 'Lacy Burke',
+    amount: 9010,
+    status: 'Paid'
   },
   {
-    index: 11,
-    title: 'Interstellar',
-    year: 2015
+    number: 'QGZQM',
+    client: 'Jessie Morse',
+    amount: 3956,
+    status: 'Draft'
   },
   {
-    index: 12,
-    title: 'Cloud Atlas',
-    year: 2013
+    number: 'XPUFB',
+    client: 'Lourdes Buckner',
+    amount: 7253,
+    status: 'Draft'
   },
   {
-    index: 13,
-    title: 'Children of Men',
-    year: 2007
+    number: 'PVEAE',
+    client: 'Gail Burch',
+    amount: 8152,
+    status: 'Paid'
   },
   {
-    index: 14,
-    title: 'Total Recall',
-    year: 1990
+    number: 'WSQLT',
+    client: 'Hopkins Cruz',
+    amount: 3835,
+    status: 'Draft'
   },
   {
-    index: 15,
-    title: 'Rise of the Planet of the Apes',
-    year: 2011
+    number: 'MXOCY',
+    client: 'White Bright',
+    amount: 7068,
+    status: 'Pending'
   },
   {
-    index: 16,
-    title: 'Robocop',
-    year: 1987
+    number: 'NFUFS',
+    client: 'Pansy Guthrie',
+    amount: 2822,
+    status: 'Pending'
   },
   {
-    index: 17,
-    title: 'Avatar',
-    year: 2009
+    number: 'MQHVU',
+    client: 'Sybil Hines',
+    amount: 6012,
+    status: 'Pending'
   },
   {
-    index: 18,
-    title: 'Akira',
-    year: 1987
+    number: 'SPTCP',
+    client: 'Rhoda Christian',
+    amount: 6561,
+    status: 'Paid'
   },
   {
-    index: 19,
-    title: 'Alien',
-    year: 1979
+    number: 'EYGBU',
+    client: 'Blanchard Hobbs',
+    amount: 5347,
+    status: 'Paid'
   },
   {
-    index: 20,
-    title: 'Starship Troopers',
-    year: 1997
-  },
-  {
-    index: 21,
-    title: 'District 9',
-    year: 2009
-  },
-  {
-    index: 22,
-    title: 'Blade Runner',
-    year: 1992
-  },
-  {
-    index: 23,
-    title: 'Minority Report',
-    year: 2002
-  },
-  {
-    index: 24,
-    title: 'Watchmen',
-    year: 2009
-  },
-  {
-    index: 25,
-    title: 'War of the Worlds',
-    year: 2005
-  },
-  {
-    index: 26,
-    title: 'Jurassic Park',
-    year: 2014
-  },
-  {
-    index: 27,
-    title: 'Looper',
-    year: 2012
+    number: 'DHJLW',
+    client: 'Freeman Mcmahon',
+    amount: 2576,
+    status: 'Pending'
   }
 ]
+function serialNumber (length) {
+  const numbers = []
+
+  for (let i = 0; i < length; i++) {
+    const randomNumber = Math.floor(Math.random() * (92 - 65)) + 65
+    numbers.push(String.fromCharCode(randomNumber))
+  }
+
+  return numbers.join('')
+}
+const app = Vue.createApp({
+  data: function () {
+    return {
+      invoices: invoices,
+      invoice: '',
+      sort: 'filter',
+    }
+  },
+  /*created: function () {
+    const invoices = localStorage.getInvoice('invoices')
+
+    if (invoices) {
+      this.invoices = JSON.parse(invoices)
+    }
+  },*/
+  methods: {
+    filterinvoices: function () {
+      return this.invoices.filter(invoice => invoice.client.toLowerCase().includes(this.invoice.toLowerCase()))
+    },
+    sortinvoices: function () {
+      return this.filterinvoices().sort((a, b) => {
+        if (a[this.sort] < b[this.sort]) {
+          return -1 
+        } else if (a[this.sort] < b[this.sort]
+            ) {
+          return 1 
+        } else {
+          return 0
+          }
+      })
+    },
+
+    created: function () {
+      const invoices = localStorage.getItem('invoices')
+  
+      if (cards) {
+        this.invoices = JSON.parse(invoices)
+      }
+    },
+    
+
+    addItem: function () {
+      this.invoices.push({
+          title: this.invoice,
+          complete: false
+      })
+      this.invoice = ''
+  },
+    removeItem: function (index) {
+      this.invoices.splice(index, 1)
+    },
+    computed: {
+      remaining: function(){
+        return this.invoices.filter(invoice => !invoice.complete).length
+      }
+    }
+  },
+  watch: {
+    invoices: {
+        deep: true,
+        handler: function () {
+            localStorage.setItem('invoices', JSON.stringify(this.invoices))
+
+        }
+      }
+    }
+})
+const vm = app.mount('#app')
+
+
